@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  postgres: 
+    image: postgres:16
+    container_name: flight-alert-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: flight_user
+      POSTGRES_PASSWORD: flight_pass
+      POSTGRES_DB: flight_alert_db
+    ports: 
+      - "5432:5432"
+    volumes:
+      - flight_alert_postgres_data:/var/lib/postgresql/data
+volumes:
+  flight_alert_postgres_data:
