@@ -316,6 +316,8 @@ Telegram
 
 # 🧪 Ambiente de desenvolvimento
 
+## PARA USO LOCAL
+
 ## Instalar dependências
 
 ```bash
@@ -356,6 +358,119 @@ npx prisma migrate dev
 
 ```bash
 npm run start:dev
+```
+````md
+## 🐳 PARA USO COM Docker
+
+## 1. Create the `.env` file
+
+Create a `.env` file in the project root:
+
+```env
+TELEGRAM_BOT_TOKEN="YOUR_TELEGRAM_BOT_TOKEN"
+````
+
+> The PostgreSQL connection used inside Docker is already configured in the `docker-compose.yml`.
+
+---
+
+## 2. Build and start the containers
+
+```bash
+docker compose up --build
+```
+
+Run in background mode:
+
+```bash
+docker compose up -d --build
+```
+
+---
+
+## 3. View application logs
+
+```bash
+docker compose logs -f app
+```
+
+View PostgreSQL logs:
+
+```bash
+docker compose logs -f postgres
+```
+
+---
+
+## 4. Stop containers
+
+```bash
+docker compose down
+```
+
+Stop and remove PostgreSQL volume:
+
+```bash
+docker compose down -v
+```
+
+> Warning: this will remove all database data.
+
+---
+
+## 5. Project services
+
+The Docker environment includes:
+
+* NestJS API
+* PostgreSQL database
+* Prisma ORM
+* Telegram Bot integration
+* Automatic database migrations
+
+---
+
+## 6. Default ports
+
+| Service    | Port   |
+| ---------- | ------ |
+| API        | `3000` |
+| PostgreSQL | `5432` |
+
+
+## 7. Useful commands
+
+Rebuild containers:
+
+```bash
+docker compose up --build
+```
+
+Restart containers:
+
+```bash
+docker compose restart
+```
+
+Remove stopped containers:
+
+```bash
+docker compose rm
+```
+
+Open terminal inside API container:
+
+```bash
+docker exec -it flight-alert-api sh
+```
+
+Open PostgreSQL terminal:
+
+```bash
+docker exec -it flight-alert-postgres psql -U flight_user -d flight_alert_db
+```
+
+```
 ```
 
 ---

@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   postgres: 
     image: postgres:16
@@ -13,5 +11,19 @@ services:
       - "5432:5432"
     volumes:
       - flight_alert_postgres_data:/var/lib/postgresql/data
+  
+  app:
+    build: .
+    container_name: flight-alert-api
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://USER:PASSWORD@postgres:5432/flight_alert_db?schema=public"
+      TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
+    command: sh -c "npx prisma migrate deploy && npm run start:prod"
+
 volumes:
   flight_alert_postgres_data:
